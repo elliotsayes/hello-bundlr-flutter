@@ -10,7 +10,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - uses: subosito/flutter-action@v1
-      - uses: bluefireteam/flutter-gh-pages@v7
+      - uses: subosito/flutter-action@v2
+        with: 
+          channel: beta
+      - uses: bluefireteam/flutter-gh-pages@v8
         with:
           baseHref: /hello-bundlr-flutter/
