@@ -85,7 +85,11 @@ class _WalletSelectorState extends State<WalletSelector> {
 
   Future<void> handleGenerateWallet() async {
     setState(() {
-      walletFuture = compute((_) async => Wallet.generate(), null);
+      if (!kIsWeb) {
+        walletFuture = compute((_) async => Wallet.generate(), null);
+      } else {
+        walletFuture = Wallet.generate();
+      }
     });
 
     walletFuture.then((wallet) => navigateWithWallet(wallet!));
