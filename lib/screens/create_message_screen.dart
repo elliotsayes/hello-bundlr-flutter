@@ -1,5 +1,7 @@
 import 'package:arweave/arweave.dart';
 import 'package:flutter/material.dart';
+import 'package:hello_bundlr/widgets/bundlr_form.dart';
+import 'package:hello_bundlr/widgets/wallet_info.dart';
 
 class CreateMessageScreen extends StatelessWidget {
   final Wallet wallet;
@@ -14,7 +16,26 @@ class CreateMessageScreen extends StatelessWidget {
       ),
       body: SafeArea(
         child: Center(
-          child: Text('wallet: ${wallet.toString()}'),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                child: WalletInfo(wallet: wallet),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 40,
+                  ),
+                  child: BundlrForm(wallet: wallet),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
