@@ -46,14 +46,14 @@ class _WalletSelectorState extends State<WalletSelector> {
               Center(
                 child: MaterialButton(
                   color: Theme.of(context).buttonTheme.colorScheme?.background,
-                  onPressed: () async => handleGenerateWallet(),
+                  onPressed: kIsWeb ? null : handleGenerateWallet,
                   child: const Text('Generate new wallet'),
                 ),
               ),
               Center(
                 child: MaterialButton(
                   color: Theme.of(context).buttonTheme.colorScheme?.background,
-                  onPressed: () async => handleSelectWallet(),
+                  onPressed: handleSelectWallet,
                   child: const Text('Load wallet from file'),
                 ),
               ),
