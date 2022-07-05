@@ -6,7 +6,7 @@ packages:
     description:
       path: "."
       ref: integrate-bundlr-dataitem-test-impl
-      resolved-ref: "86b9c475fd3d1219ca5b0833393a1ff5facf2e97"
+      resolved-ref: f1dcd9dd337bc8bb2225292e5ada2490577363ac
       url: "https://github.com/elliotsayes/arweave-dart.git"
     source: git
     version: "3.2.0"

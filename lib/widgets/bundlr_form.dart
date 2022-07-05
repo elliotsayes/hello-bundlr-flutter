@@ -1,11 +1,10 @@
 import 'dart:convert';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:arweave/arweave.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BundlrForm extends StatefulWidget {
@@ -55,51 +54,50 @@ class _BundlrFormState extends State<BundlrForm> {
   void handleUpload() async {
     if (messageText.isEmpty) return;
 
+    final rand = Random.secure();
     final dataItem = DataItem.withBlobData(
       owner: await widget.wallet.getOwner(),
-      data: utf8.encode(
-        messageText,
-      ) as Uint8List,
+      nonce: base64.encode(List<int>.generate(32, (i) => rand.nextInt(256))),
+      data: utf8.encode(messageText) as Uint8List,
     )
       ..addTag('App-Name', 'Hello-Bundlr-Flutter')
       ..addTag('Content-Type', 'text/plain');
     await dataItem.sign(widget.wallet);
 
-    final blob = (await dataItem.asBinary()).toBytes();
+    final result =
+        (await widget.arweave.transactions.upload(dataItem).toList()).last;
 
-    // await widget.arweave.transactions.post(dataItem);
-
-    final resp = await widget.arweave.bundlr!.post(
-      'tx/arweave',
-      body: blob,
-      headers: {"Content-Type": "application/octet-stream"},
-    );
-    print(resp.statusCode);
-    print(resp.body);
-
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        duration: Duration(seconds: 5),
-        content: RichText(
-          text: TextSpan(children: [
-            const TextSpan(text: 'Uploaded! Click to '),
-            TextSpan(
-              text: 'open on arweave.net',
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  launchUrl(
-                    Uri(
-                      scheme: 'https',
-                      host: 'arweave.net',
-                      path: dataItem.id,
-                    ),
-                  );
-                },
-            )
-          ]),
+    if (result.isComplete) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: Duration(seconds: 5),
+          content: RichText(
+            text: TextSpan(children: [
+              const TextSpan(text: 'Uploaded! Click to '),
+              TextSpan(
+                text: 'open on arweave.net',
+                style: TextStyle(color: Colors.blueGrey.shade200),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    launchUrl(
+                      Uri(
+                        scheme: 'https',
+                        host: 'arweave.net',
+                        path: dataItem.id,
+                      ),
+                    );
+                  },
+              )
+            ]),
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Upload failed...'),
+        ),
+      );
+    }
   }
 }
