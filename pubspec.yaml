@@ -38,6 +38,7 @@ dependencies:
     git:
       url: https://github.com/elliotsayes/arweave-dart.git
       ref: integrate-bundlr-dataitem-test-impl
+  file_picker: ^4.5.1
 
 dev_dependencies:
   flutter_test:
