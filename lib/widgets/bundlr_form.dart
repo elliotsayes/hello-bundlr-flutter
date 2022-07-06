@@ -51,7 +51,15 @@ class _BundlrFormState extends State<BundlrForm> {
   }
 
   void handleUpload() async {
-    if (messageText.isEmpty) return;
+    if (messageText.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          duration: Duration(seconds: 2),
+          content: Text('Please enter some text to upload'),
+        ),
+      );
+      return;
+    }
 
     final rand = Random.secure();
     final dataItem = DataItem.withBlobData(
