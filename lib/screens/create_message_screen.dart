@@ -15,8 +15,9 @@ class CreateMessageScreen extends StatelessWidget {
         title: const Text('Hello Bundlr Demo'),
       ),
       body: SafeArea(
-        child: Center(
+        child: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -25,14 +26,12 @@ class CreateMessageScreen extends StatelessWidget {
                 ),
                 child: WalletInfo(wallet: wallet),
               ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 40,
-                  ),
-                  child: BundlrForm(wallet: wallet),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                  horizontal: 40,
                 ),
+                child: BundlrForm(wallet: wallet),
               ),
             ],
           ),

@@ -26,16 +26,15 @@ class _BundlrFormState extends State<BundlrForm> {
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: TextFormField(
-              textAlignVertical: TextAlignVertical.top,
-              onChanged: (value) => messageText = value,
-              maxLines: null,
-              expands: true,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-              ),
+          TextFormField(
+            textAlignVertical: TextAlignVertical.top,
+            onChanged: (value) => messageText = value,
+            maxLines: null,
+            minLines: null,
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
             ),
           ),
           Padding(
@@ -45,7 +44,7 @@ class _BundlrFormState extends State<BundlrForm> {
               child: const Text('Upload to Bundlr'),
             ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 25),
         ],
       ),
     );
@@ -73,7 +72,9 @@ class _BundlrFormState extends State<BundlrForm> {
           duration: Duration(seconds: 5),
           content: RichText(
             text: TextSpan(children: [
-              const TextSpan(text: 'Uploaded! Click to '),
+              const TextSpan(
+                  text: 'Uploaded! Click to ',
+                  style: TextStyle(color: Colors.white70)),
               TextSpan(
                 text: 'open on arweave.net',
                 style: TextStyle(color: Colors.blueGrey.shade200),
