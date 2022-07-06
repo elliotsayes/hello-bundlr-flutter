@@ -29,12 +29,14 @@ class _BundlrFormState extends State<BundlrForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextFormField(
+            keyboardType: TextInputType.multiline,
             textAlignVertical: TextAlignVertical.top,
             onChanged: (value) => messageText = value,
             maxLines: null,
             minLines: null,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
+              hintText: 'Type something to upload',
             ),
           ),
           Padding(
