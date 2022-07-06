@@ -101,6 +101,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.0"
+  fast_rsa:
+    dependency: "direct main"
+    description:
+      name: fast_rsa
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.4.7"
   ffi:
     dependency: transitive
     description:
@@ -122,6 +129,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  flat_buffers:
+    dependency: transitive
+    description:
+      name: flat_buffers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.5"
   flutter:
     dependency: "direct main"
     description: flutter

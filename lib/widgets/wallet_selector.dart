@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:arweave/arweave.dart';
+import 'package:arweave/utils.dart';
+import 'package:fast_rsa/fast_rsa.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +48,7 @@ class _WalletSelectorState extends State<WalletSelector> {
               Center(
                 child: MaterialButton(
                   color: Theme.of(context).buttonTheme.colorScheme?.background,
-                  onPressed: kIsWeb ? null : handleGenerateWallet,
+                  onPressed: handleGenerateWallet,
                   child: const Text('Generate new wallet'),
                 ),
               ),
@@ -85,10 +87,13 @@ class _WalletSelectorState extends State<WalletSelector> {
 
   Future<void> handleGenerateWallet() async {
     setState(() {
-      if (!kIsWeb) {
-        walletFuture = compute((_) async => Wallet.generate(), null);
+      if (kIsWeb) {
+        walletFuture = RSA
+            .generate(keyLength)
+            .then((kp) => RSA.convertPrivateKeyToJWK(kp.privateKey))
+            .then((jwk) => Wallet.fromJwk(jwk));
       } else {
-        walletFuture = Wallet.generate();
+        walletFuture = compute((_) async => Wallet.generate(), null);
       }
     });
 
