@@ -41,6 +41,7 @@ dependencies:
   file_picker: ^4.5.1
   url_launcher: ^6.1.4
   fast_rsa: ^3.4.7
+  loading_animations: ^2.2.0
 
 dev_dependencies:
   flutter_test:

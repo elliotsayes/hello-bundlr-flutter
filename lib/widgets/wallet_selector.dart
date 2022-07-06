@@ -7,6 +7,7 @@ import 'package:fast_rsa/fast_rsa.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hello_bundlr/widgets/generate_wallet_loading.dart';
 
 import '../screens/create_message_screen.dart';
 
@@ -34,12 +35,7 @@ class _WalletSelectorState extends State<WalletSelector> {
       future: walletFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Padding(
-            padding: EdgeInsets.all(50),
-            child: FittedBox(
-              child: FlutterLogo(),
-            ),
-          );
+          return const GenerateWalletLoading();
         } else {
           return Column(
             // mainAxisSize: MainAxisSize.min,
