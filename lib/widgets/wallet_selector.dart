@@ -83,14 +83,10 @@ class _WalletSelectorState extends State<WalletSelector> {
 
   Future<void> handleGenerateWallet() async {
     setState(() {
-      if (kIsWeb) {
-        walletFuture = RSA
-            .generate(keyLength)
-            .then((kp) => RSA.convertPrivateKeyToJWK(kp.privateKey))
-            .then((jwk) => Wallet.fromJwk(jwk));
-      } else {
-        walletFuture = compute((_) async => Wallet.generate(), null);
-      }
+      walletFuture = RSA
+          .generate(keyLength)
+          .then((kp) => RSA.convertPrivateKeyToJWK(kp.privateKey))
+          .then((jwk) => Wallet.fromJwk(jwk));
     });
 
     walletFuture.then((wallet) => navigateWithWallet(wallet!));
